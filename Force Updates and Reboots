@@ -1,0 +1,25 @@
+#Updates Computer w/ reboot#
+$Computers = @("Computer1", "Computer2")  # List of target computer names
+
+$Session = New-PSSession -ComputerName $Computers
+
+Invoke-Command -Session $Session -ScriptBlock {
+    # Check for updates and install
+    Install-WindowsUpdate -AcceptAll -ForceReboot
+}
+
+Remove-PSSession -Session $Session
+
+
+
+#Reboot Only#
+$Computers = @("Computer1", "Computer2")  # List of target computer names
+
+$Session = New-PSSession -ComputerName $Computers
+
+Invoke-Command -Session $Session -ScriptBlock {
+    # Force a reboot
+    Restart-Computer -Force
+}
+
+Remove-PSSession -Session $Session
