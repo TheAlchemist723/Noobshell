@@ -1,0 +1,16 @@
+$DaysInactive = 90  # Define the number of days of inactivity
+
+# Get the current date minus the specified number of days
+$InactiveDate = (Get-Date).AddDays(-$DaysInactive)
+
+# Get a list of inactive computers from Active Directory
+$InactiveComputers = Get-ADComputer -Filter {LastLogonTimeStamp -lt $InactiveDate} -Properties LastLogonTimeStamp
+
+# Display the list of inactive computers
+$InactiveComputers | Select-Object Name, LastLogonTimeStamp | Format-Table -AutoSize
+
+
+
+
+
+
