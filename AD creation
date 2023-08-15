@@ -1,0 +1,27 @@
+# Parameters
+$Username = "JohnDoe"
+$Password = ConvertTo-SecureString "P@ssw0rd" -AsPlainText -Force
+$OU = "OU=Users,OU=Company,DC=domain,DC=com"
+$Manager = "CN=Manager Name,OU=Users,OU=Company,DC=domain,DC=com"
+$Department = "Sales"
+
+
+# Create On-Premise Active Directory User
+New-ADUser -Name $Username -SamAccountName $Username -UserPrincipalName "$Username@domain.com" -Path $OU -AccountPassword $Password -Enabled $true
+
+# Set Manager for the User
+Set-ADUser -Identity $Username -Manager $Manager
+
+# Set Department for the User
+Set-ADUser -Identity $Username -Department $Department
+
+# Create Exchange Admin Center Account
+Enable-RemoteMailbox -Identity $Username -RemoteRoutingAddress "$Username@domain.mail.onmicrosoft.com"
+
+# Assign Office 365 License
+$LicenseOptions = New-MsolLicenseOptions -AccountSkuId $License
+Set-MsolUserLicense -UserPrincipalName "$Username@domain.com" -AddLicenses $License -LicenseOptions $LicenseOptions
+
+# Set up Azure AD Sync (assuming it's already configured)
+
+# You might also want to perform additional tasks like configuring mailbox, setting up mailbox forwarding, etc.
