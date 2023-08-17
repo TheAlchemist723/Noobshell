@@ -1,0 +1,16 @@
+$LogFile = "C:\Path\To\Log\cpu_usage_log.txt"
+
+# Get processes with CPU usage 100% or more
+$HighCPUProcesses = Get-Process | Where-Object { $_.CPU -ge 100 }
+
+if ($HighCPUProcesses) {
+    $LogContent = $HighCPUProcesses | ForEach-Object {
+        "$($_.ProcessName) is using $($_.CPU) CPU usage."
+    }
+
+    $LogContent | Out-File -FilePath $LogFile -Append
+
+    Write-Host "High CPU usage processes logged to $LogFile."
+} else {
+    Write-Host "No processes found with CPU usage 100% or more."
+}
