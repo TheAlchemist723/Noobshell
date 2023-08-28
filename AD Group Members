@@ -1,0 +1,24 @@
+# Replace these with your actual values
+$targetUser = "username"
+
+# Get the user's distinguished name
+$user = Get-ADUser -Filter { SamAccountName -eq $targetUser }
+
+if ($user) {
+    # Get the groups the user is a member of
+    $memberOf = Get-ADPrincipalGroupMembership -Identity $user
+
+    Write-Host "Groups that $targetUser is a member of:"
+    $memberOf | ForEach-Object {
+        Write-Host "- $($_.Name)"
+    }
+} else {
+    Write-Host "User $targetUser not found."
+}
+This version of the script first checks if the user exists before attempting to retrieve their group memberships. If the user is not found, it will display a message indicating that the user was not found. If you still encounter errors, please provide more details about the error message you're receiving.
+
+
+
+
+
+
