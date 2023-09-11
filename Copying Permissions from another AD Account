@@ -1,0 +1,10 @@
+$source = ""  #use SamAccountName
+$dest = ""    #use SamAccountName
+
+$credential = Get-Credential
+$CopyFromUser = Get-ADUser -Credential $credential $source -prop MemberOf
+$CopyToUser = Get-ADUser -Credential $credential $dest -prop MemberOf
+
+$CopyFromUser.MemberOf |
+Where{$CopyToUser.MemberOf -notcontains $_} |
+Add-ADGroupMember -Members $CopyToUser
