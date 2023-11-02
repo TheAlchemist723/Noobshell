@@ -1,0 +1,1 @@
+robocopy \\192.168.47.129\c$\Users\npatel "\\crlsnas01\Volume_1\process out\2023 Processedout Combined\202304\npatel\C" /XJ /S /E /W:1 /R:1 /XD "%USERPROFILE%\OneDrive - Natural Alternatives International, Inc"
